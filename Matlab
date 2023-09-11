@@ -1,0 +1,47 @@
+% Schleife zum Lesen der Bilder nacheinander
+for i = 1:length(imageFiles)
+    % Vollständiger Pfad zur aktuellen Bilddatei
+    currentImagePath = fullfile(imageFolderPath, imageFiles(i).name);
+    
+    % Lese das Bild
+    OwnIm = imread(currentImagePath);
+    OwnImRe = imresize(OwnIm,imageSize(:,1:2));
+
+    % Run the network on the test set.
+    YTest = classify(GTSRBNet, testImages);
+
+    % Eigenes Bild klassifizieren und Nummer der Klasse ausgeben
+    classifications = classify(GTSRBNet, OwnImRe);
+    
+    % Zum Anzeigen des Bildes (optional)
+    imshow(OwnIm);
+    
+    % Warte auf eine Tasteneingabe, bevor das nächste Bild geladen wird
+    pause;
+
+     % Füge den Bildnamen zur Liste hinzu
+    imageNames{end + 1} = imageFiles(i).name;
+
+    % Füge das Klassifizierungsergebnis zur Liste hinzu
+    classifications(end + 1) = classifications;
+
+    % Calculate the accuracy and display on output screen.
+    accuracy = sum(YTest == testLabels)/numel(testLabels);
+    accuracy(end + 1) = accuracy;
+    
+end
+
+
+% Klassifizierung wird erstellt
+T = table(imageNames, classification, accuracy);
+
+
+%Pfad zur Excel - Datei
+excelFilePath = 'C:\Users\Eren\Documents\MATLAB\Bachelorarbeit';
+filename = 'klassifiziert.xlsx';
+
+% Tabelle für die Klassifizierung wird erstellt
+writetable(T,filename, 'Sheet', 1,'Range','A1')
+
+% Rufen Sie die Funktion auf
+TestExcel();
