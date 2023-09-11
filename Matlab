@@ -12,7 +12,6 @@ for i = 1:length(imageFiles)
    
     classifications = classify(GTSRBNet, OwnImRe);
     
-    % Zum Anzeigen des Bildes (optional)
     imshow(OwnIm);
     
     pause;
