@@ -29,7 +29,7 @@ end
 
 
 
-T = table(imageNames, classification, accuracy);
+T = table(imageNames, classifications, accuracy);
 
 
 excelFilePath = 'C:\Users\Eren\Documents\MATLAB\Bachelorarbeit';
